@@ -294,7 +294,41 @@ app.get("/emergencyTreatment/query", (req, res) => {
   })
 })
 
+app.get("/epidemicArea/query", (req, res) => {
+  let sql = "select * from school.epidemicArea";
+  var sqlParams;
+  db.query(sql, sqlParams, (e, results)=> {
+    if (!e) {
+      res.send(results);
+    } else {
+      console.log(e.message);
+    }
+  })
+})
+
 app.get("/map", (req, res) => {
   res.sendFile(__dirname + "/" + "test.html")
 })
 
+
+/**************************************************************** */
+
+
+
+// var rings = [
+//   [
+//     [104.0813368, 30.6701333 ],
+//     [104.0828859, 30.6694499 ],
+//     [104.0810407, 30.6666479 ],
+//     [104.0792866, 30.6674680 ]
+//   ]
+// ];
+// var polygon = new Polygon({
+//   rings: rings,
+//   spatialReference: {wkid: 4326}
+// });
+// var point = new Point({
+//   latitude: 30.6685387,
+//   longitude: 30.6685387
+// })
+// console.log(polygon.contains(point));

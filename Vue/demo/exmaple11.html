@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue3.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>
+            <!-- 使用router-link组件来进行导航-->
+            <!-- 使用传递to指定链接-->
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+        </p>
+        <!--路由出口-->
+        <!--路由匹配到的组件将在这里渲染-->
+        <router-view></router-view>
+    </div>
+    <script>
+        //1、定义路由组件
+        const Home = {template: `<div>Home</div>`};
+        const About = {template: `<div>About</div>`};
+        //2、定义路由
+        const routers = [
+            {path: "/", component: Home},
+            {path: "/about", component: About}
+        ]
+        //3、创建路由
+        const router = VueRouter.createRouter({
+            //使用hash模式
+            history: VueRouter.createWebHashHistory(),
+            routers
+        })
+        app.use(router);
+
+
+
+
+
+    </script>
+</body>
+
+</html>

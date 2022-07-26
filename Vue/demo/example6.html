@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    price: 20,
+                    count: 23,
+                    obj: 0
+                }
+            },
+            watch: {
+                obj(){
+                    console.log("total has changed")
+                }
+            },
+            computed: {
+                times() {
+                    return this.price * this.count;
+                }
+            },
+            methods:{
+                changeObj(){
+                    this.obj += 10;
+                }
+            },
+            template: `<div>{{times}}</div>
+            <button @click="changeObj">更改</button>`
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

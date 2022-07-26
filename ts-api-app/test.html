@@ -5,9 +5,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1,width=device-width" />
   <title>Test Map</title>
-  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/dijit/themes/claro/claro.css" />
-  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/esri/themes/light/main.css" />
-  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/esri/css/main.css" />
   <style>
     html,
     body,
@@ -18,19 +15,16 @@
       height: 100%;
     }
   </style>
-  <script src="http://localhost/arcgis_js/4.16/api/init.js"></script>
   <script type="module">
-      import WebMap from "./node_modules/@arcgis/core/WebMap";
+      import WebMap from "https://js.arcgis.com/4.24/@arcgis/core/WebMap.js";
       import * as projection from "./node_modules/@arcgis/core/geometry/projection";
       import Basemap from "./node_modules/@arcgis/core/Basemap";
-      import TileLayer from "./node_modules/@arcgis/core/layers/TileLayer";
       import Map from "./node_modules/@arcgis/core/Map";
       import MapView from "./node_modules/@arcgis/core/views/MapView";
       import Graphic from "./node_modules/@arcgis/core/Graphic";
       import GraphicsLayer from "./node_modules/@arcgis/core/layers/GraphicsLayer";
       import PopupTemplate from "./node_modules/@arcgis/core/PopupTemplate";
       import WebTileLayer from "./node_modules/@arcgis/core/layers/WebTileLayer";
-      import TileInfo from "./node_modules/@arcgis/core/layers/support/TileInfo";
       import SpatialReference from "./node_modules/@arcgis/core/geometry/SpatialReference";
       import BasemapToggle from "./node_modules/@arcgis/core/widgets/BasemapToggle"
       // // --------------------------------------------------------------------
@@ -43,18 +37,12 @@
       // //https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetGray/MapServer
 
 
-      var layer = new TileLayer({
-        url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"
-      });
-      var customBasemap = new Basemap({
-        baseLayers: [layer],
-      });
 
       myMap = new Map({
-        basemap: customBasemap
+        basemap: "topo"
       });
       view = new MapView({
-        center: [104, 30], // long, lat
+        center: [104, 30],
         container: "viewDiv",
         map: myMap,
         zoom: 3

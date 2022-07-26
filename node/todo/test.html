@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="description" content="DevLabs - Get driving directions">
+  <meta charset="utf-8">
+  <title>ArcGIS Developer Guide: Find a route</title>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .esri-view .esri-directions {
+      position: fixed;
+      right: 15px;
+      max-height: calc(100% - 45px) !important;
+    }
+
+    .esri-view .esri-component.esri-attribution {
+      position: fixed;
+    }
+
+    .esri-directions__scroller {
+      max-width: 250px !important;
+    }
+  </style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.23/"></script>
+  <script>
+    require([
+      "esri/config",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/widgets/Directions",
+      "esri/symbols/SimpleMarkerSymbol"
+    ], (esriConfig, Map, MapView, Directions, SimpleMarkerSymbol) => {
+
+      esriConfig.apiKey =
+        "AAPK37853f2d8fd242f6ad9df392845bb0855YYrv-aaUh64MrNqmp51tQ6FZBa-YBx9mlRhkoWfEq0QOAMSzDrRbVxMEBBRfVXV";
+
+      const map = new Map({
+        basemap: "topo"
+      });
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [104.08, 30.68],
+        zoom: 12,
+        padding: {
+          right: 320
+        },
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+      const directions = new Directions({
+        view: view,
+        routeServiceUrl: "https://edutrial.geoscene.cn/geoscene/rest/services/ChengduCityNetworkOrigin/NAServer/route/"
+      });
+
+      view.ui.add(directions, "top-right");
+
+      function createStopSymbol(outline, fill, size) {
+        return new SimpleMarkerSymbol({
+          size: size,
+          outline: {
+            width: "2px",
+            color: outline
+          },
+          color: fill
+        });
+      }
+
+      // Stop symbols
+      directions.stopSymbols.first = createStopSymbol("black", "white", "12px");
+      directions.stopSymbols.middle = createStopSymbol("grey", "white", "10px");
+      directions.stopSymbols.last = createStopSymbol("white", "black", "12px");
+
+      // Route symbol
+      directions.routeSymbol.width = "5";
+      directions.routeSymbol.color = [50, 150, 255, .75];
+      directions.routeSymbol.style = "solid";
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

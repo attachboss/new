@@ -16,5 +16,6 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1"
-  }
+  },
+  "type": "module" 
 }
