@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,width=device-width" />
+  <title>Test Map</title>
+  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/dijit/themes/claro/claro.css" />
+  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/esri/themes/light/main.css" />
+  <link rel="stylesheet" href="http://localhost/arcgis_js/4.16/api/esri/css/main.css" />
+  <style>
+    html,
+    body,
+    #viewDiv {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="http://localhost/arcgis_js/4.16/api/init.js"></script>
+  <script type="module">
+      import WebMap from "./node_modules/@arcgis/core/WebMap";
+      import * as projection from "./node_modules/@arcgis/core/geometry/projection";
+      import Basemap from "./node_modules/@arcgis/core/Basemap";
+      import TileLayer from "./node_modules/@arcgis/core/layers/TileLayer";
+      import Map from "./node_modules/@arcgis/core/Map";
+      import MapView from "./node_modules/@arcgis/core/views/MapView";
+      import Graphic from "./node_modules/@arcgis/core/Graphic";
+      import GraphicsLayer from "./node_modules/@arcgis/core/layers/GraphicsLayer";
+      import PopupTemplate from "./node_modules/@arcgis/core/PopupTemplate";
+      import WebTileLayer from "./node_modules/@arcgis/core/layers/WebTileLayer";
+      import TileInfo from "./node_modules/@arcgis/core/layers/support/TileInfo";
+      import SpatialReference from "./node_modules/@arcgis/core/geometry/SpatialReference";
+      import BasemapToggle from "./node_modules/@arcgis/core/widgets/BasemapToggle"
+      // // --------------------------------------------------------------------
+      // // If you do not have public internet access then use the Basemap class
+      // // and point this URL to your own locally accessible cached service.
+      // //
+      // // Otherwise you can just use one of the named hosted ArcGIS services.
+      // // https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer
+      // // --------------------------------------------------------------------
+      // //https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetGray/MapServer
+
+
+      var layer = new TileLayer({
+        url: "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"
+      });
+      var customBasemap = new Basemap({
+        baseLayers: [layer],
+      });
+
+      myMap = new Map({
+        basemap: customBasemap
+      });
+      view = new MapView({
+        center: [104, 30], // long, lat
+        container: "viewDiv",
+        map: myMap,
+        zoom: 3
+      });
+      //去水印
+      view.ui.remove("attribution")
+
+      //画图
+      const graphicsLayer = new GraphicsLayer();
+      myMap.add(graphicsLayer);
+      //#region  point
+      //创建Geometry
+      var point = {
+        type: "point",
+        longitude: 103.985,
+        latitude: 30.765
+      };
+      //添加样式
+      var simpleMarkerSymbol = {
+        type: "simple-marker",
+        color: [0, 0, 0],
+        outline: {
+          color: [255, 255, 255],
+          width: 1
+        }
+      };
+      //添加属性
+      var attributes = {
+        name: "NewPoint",
+        description: "This is a new created point"
+      };
+      //添加要素
+      var pointGraphic = new Graphic({
+        geometry: point,
+        symbol: simpleMarkerSymbol,
+        attributes: attributes,
+        popupTemplate: {
+          title: attributes.name,
+          content: attributes.description
+        }
+      });
+      graphicsLayer.add(pointGraphic);
+      //#endregion
+      //#region polyline
+      //添加线
+      var polyline = {
+        type: "polyline",
+        paths: [
+          [103.86, 36.05],
+          [103.985, 30.765],
+          [121.5, 31.237]
+        ]
+      };
+
+      //添加样式
+      var simpleLinerSymbol = {
+        type: "simple-line",
+        color: "#C4C4C4",
+        width: 2
+      };
+
+      //添加要素
+      var polylineGraphic = new Graphic({
+        geometry: polyline,
+        symbol: simpleLinerSymbol
+      });
+      graphicsLayer.add(polylineGraphic);
+      //#endregion
+      //#region polygon
+      //添加面
+      var polygon = {
+        type: "polygon",
+        rings: [
+          [-123, 34],
+          [-156, 24],
+          [-143, 67]
+        ]
+      };
+
+      //添加样式
+      var simpleFillSymbol = {
+        type: "simple-fill",
+        color: [227, 139, 79, 0.1],
+        outline: {
+          color: [255, 255, 255],
+          width: 3
+        }
+      };
+      var popupTemplate = {
+        title: "{name}",
+        content: "{description}"
+      }
+      var attributes = {
+        name: "polygonGraphic",
+        description: "This is a new created polygon"
+      }
+
+      var polygonGraphic = new Graphic({
+        geometry: polygon,
+        symbol: simpleFillSymbol,
+        attributes: attributes,
+        popupTemplate: popupTemplate
+      });
+      graphicsLayer.add(polygonGraphic);
+      //#endregion polygon
+
+      var basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybird"
+      })
+
+      view.ui.add(basemapToggle, "bottom-left")
+
+
+  </script>
+</head>
+
+<body class="claro">
+  <div id="viewDiv"></div>
+</body>
+
+</html>

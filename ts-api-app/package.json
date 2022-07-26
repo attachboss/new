@@ -1,0 +1,20 @@
+{
+  "name": "ts_api_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@arcgis/core": "^4.24.7",
+    "@types/arcgis-js-api": "4.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.24",
+    "dojo-typings": "^1.11.11"
+  }
+}

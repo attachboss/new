@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@element-plus/icons": "^0.0.11",
+    "esri-loader": "^3.5.0",
+    "vue": "^3.2.31"
+  }
+}
